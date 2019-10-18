@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+
+  test block<br>
+  {%include "template-tags/include-me.html.twig"%}<br>
+
+  {% block name %}
+    name block <br>
+  {% endblock %}
+
+  {% block for_test %}
+
+    {% for sehir in sehirler %}
+      {{sehir}}
+    {% endfor %}
+
+  {% endblock %} <br>
+
+
+  {% block if_test %}
+
+    {% if ifVar%}
+      true
+    {%endif%}
+
+    {% if ifVar%}
+      true
+    {%else %}
+      false
+    {%endif%}
+
+  {% endblock %} <br>
+
+
+  {% block set_test %}
+    {% set kadir = 'ismim kadir '%}
+    {{kadir}}
+  {% endblock %} <br>
+
+
+  {% spaceless %}
+    <div>
+      <h2>
+        <b>Kadir</b>
+      </h2>
+    </div>
+  {% endspaceless %}
+
+
+
+
+{#commentline#}
+
+
+
+{{sentence |capitalize }} <br>
+
+{{bugun |date('D M Y') }}
+
+
+
+{% endblock %}
+
+
+
+
+{% block javascripts %}
+  {{parent()}}
+  <script src= "{{asset('js/template-tag-index.js')}}"></script>
+{% endblock %}

@@ -1,3 +1,7 @@
 controllers:
     resource: ../../src/Controller/
     type: annotation
+
+test-bundle-controllers:
+    resource: ../../src/KadirLtd/TestBundle/Controller
+    type: annotation
