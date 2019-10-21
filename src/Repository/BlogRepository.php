@@ -19,6 +19,20 @@ class BlogRepository extends ServiceEntityRepository
         parent::__construct($registry, Blog::class);
     }
 
+    public function findByIdGreateThan(int $no){
+        $qb = $this -> createQueryBuilder('b')
+            ->andWhere('b.id > :searchTerm')
+            ->setParameter('searchTerm', $no)
+            ->getQuery();
+        return $qb->execute();
+    }
+    public function findByEntryContains(string $term){
+        $qb = $this -> createQueryBuilder('b')
+            ->andWhere('b.entry LIKE :searchTerm')
+            ->setParameter('searchTerm', '%'.$term.'%')
+            ->getQuery();
+        return $qb->execute();
+    }
     // /**
     //  * @return Blog[] Returns an array of Blog objects
     //  */
