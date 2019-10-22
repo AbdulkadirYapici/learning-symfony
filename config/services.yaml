@@ -5,7 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
   admin_email: 'editor@kadir.org'
-
+  afis_folder: '%kernel.project_dir%/public/uploads/afisler'
 services:
     # default configuration for services in *this* file
     _defaults:

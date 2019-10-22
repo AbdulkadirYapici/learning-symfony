@@ -2,7 +2,12 @@
 
 {%  if blog is defined %}
   {% for blogdata in blog %}
-    {{ blogdata.id }}-{{ blogdata.entry }}
+    {{ blogdata.id }}-{{ blogdata.entry }}- {{ blogdata.gorsel }} = <a href="{{ asset('uploads/afisler/' ~ blogdata.gorsel) }}"> Afiş </a>
+    <form action="{{ url('deletecsrf_entry', {id: blogdata.id}) }}" method="post">
+      <input name = "token" type="hidden" value="{{ csrf_token('entry-sil') }}">
+      <button type="submit">Sil</button>
+    </form>
+    <br>
   {% endfor %}
   {{ dump(blog) }}
 {% endif %}

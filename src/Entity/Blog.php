@@ -23,6 +23,12 @@ class Blog
    */
     protected $entry;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\File(mimeTypes={"application/pdf"})
+     */
+    private $gorsel;
+
 
   public function getId(): ?int
   {
@@ -38,6 +44,18 @@ class Blog
   public function setEntry(string $entry): self
   {
       $this->entry = $entry;
+
+      return $this;
+  }
+
+  public function getGorsel(): ?string
+  {
+      return $this->gorsel;
+  }
+
+  public function setGorsel(string $gorsel): self
+  {
+      $this->gorsel = $gorsel;
 
       return $this;
   }

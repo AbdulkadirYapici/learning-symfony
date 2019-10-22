@@ -8,6 +8,7 @@ use App\Service\MessageGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -108,6 +109,24 @@ class BlogController extends AbstractController {
 
         return new Response($id. ' idli entry başarıyla silindi ');
     }
+
+    /**
+     * @Route("/blog/deletecsrf/{id}", name="deletecsrf_entry")
+     */
+    public function deleteEntryCsrf(Blog $blog, Request $request): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $gonderilenToken= $request->request->get('token');
+
+        if($this->isCsrfTokenValid('entry-sil', $gonderilenToken)){
+            $em->remove($blog);
+            $em->flush();
+            return new  Response("Başarıyla silindi");
+        }
+        return new Response("Geçersiz token");
+
+    }
+
     /**
      *@Route("/form" , name="form" )
      */
@@ -124,7 +143,13 @@ class BlogController extends AbstractController {
         if ($form->isSubmitted() && $form->isValid()) {
             // $form->getData() holds the submitted values
             // but, the original `$task` variable has also been updated
-            $blog = $form->getData();
+            /** @var UploadedFile $file */
+            $file = $form->get('gorsel')->getData();
+
+            $fileName= $this-> randomNameForUploadedFile() . '.' . $file->guessExtension() ;
+
+            $file->move($this->getParameter('afis_folder'), $fileName);
+            $blog->setGorsel($fileName);
 
             // ... perform some action, such as saving the task to the database
             // for example, if Task is a Doctrine entity, save it!
@@ -132,7 +157,6 @@ class BlogController extends AbstractController {
              $entityManager = $this->getDoctrine()->getManager();
              $entityManager->persist($blog);
              $entityManager->flush();
-
             return $this->redirectToRoute('blog_show' );
         }
         else {
@@ -147,5 +171,8 @@ class BlogController extends AbstractController {
             ]);
         }
 
+    }
+    private function randomNameForUploadedFile (){
+        return md5(uniqid());
     }
 }

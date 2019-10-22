@@ -4,6 +4,7 @@ namespace App\Form\Type;
 use App\Entity\Blog;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,6 +18,7 @@ class BlogType extends AbstractType
             ->add('entry', TextType::class, [
                 'empty_data' => '',
             ])
+            ->add('gorsel', FileType::class)
             ->add('save', SubmitType::class)
         ;
     }
