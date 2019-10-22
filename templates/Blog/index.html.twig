@@ -1,5 +1,9 @@
-{% for blogdata in blog %}
-  {{ blogdata.id }}-{{ blogdata.entry }}
-{% endfor %}
 
-{{ dump(blog) }}
+
+{%  if blog is defined %}
+  {% for blogdata in blog %}
+    {{ blogdata.id }}-{{ blogdata.entry }}
+  {% endfor %}
+  {{ dump(blog) }}
+{% endif %}
+<a href="{{ path('form') }}">Link to Form Page</a>
