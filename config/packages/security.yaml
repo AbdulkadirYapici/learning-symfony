@@ -1,14 +1,35 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    encoders:
+        Symfony\Component\Security\Core\User\User:
+            algorithm: bcrypt
+            cost: 12
     providers:
-        in_memory: { memory: null }
+        in_memory:
+            memory:
+                users:
+                    kadir:
+                        password: k@dir
+                        #şifrelenmemiş haliyle giriş yapmıyor
+                        roles: 'ROLE_USER'
+                    admin:
+                        password: '$2y$12$MsxN5pLD3i9SX9xl1bZOeeCk1ZbDfA/WHuObzI04RAeSNX/EaXAFO'
+                        #admin123'ün sifrelenmis hali: $2y$12$MsxN5pLD3i9SX9xl1bZOeeCk1ZbDfA/WHuObzI04RAeSNX/EaXAFO
+                        roles: 'ROLE_ADMIN'
+                    admin1:
+                        password: admin12
+                        roles: 'ROLE_ADMIN'
+                        #şifrelenmemiş haliyle giriş yapmıyor
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: true
-
+            form_login:
+                login_path: login
+                check_path: login
+                default_target_path: admin
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 
@@ -18,5 +39,6 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         # - { path: ^/profile, roles: ROLE_USER }
