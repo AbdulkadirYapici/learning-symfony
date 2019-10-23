@@ -24,4 +24,5 @@ class GuvenlikController extends AbstractController {
 
   }
 
+
 }

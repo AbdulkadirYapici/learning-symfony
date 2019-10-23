@@ -8,6 +8,7 @@ security:
         in_memory:
             memory:
                 users:
+
                     kadir:
                         password: k@dir
                         #şifrelenmemiş haliyle giriş yapmıyor
