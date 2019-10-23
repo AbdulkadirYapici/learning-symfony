@@ -15,7 +15,18 @@ class CeviriController extends AbstractController
      */
     public function hello(TranslatorInterface $translator)
     {
-        $message= $translator->trans('hello.user');
-        return new Response ($message);
+        $messageControllerTrans= $translator->trans('hello.user');
+
+        $messageTwigTrans= 'hello.user';
+
+        $messageName = $translator->trans('Merhaba name', [
+           'name'=> "Kadir"
+        ]);
+        return $this->render('ceviri/index.html.twig', [
+            'messageControllerTrans'=>$messageControllerTrans,
+                'messageTwigTrans' => $messageTwigTrans,
+                'messageName' => $messageName,
+            ]
+            );
     }
 }
