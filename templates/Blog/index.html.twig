@@ -11,4 +11,8 @@
   {% endfor %}
   {{ dump(blog) }}
 {% endif %}
+{% if is_granted('ROLE_ADMIN') %}
+<b>Bu yazıyı sadece admin görür</b>
+{% endif %}
+
 <a href="{{ path('form') }}">Link to Form Page</a>

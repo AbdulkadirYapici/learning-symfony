@@ -13,13 +13,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\User\User;
+use Symfony\Component\Security\Core\Security;
 
 class BlogController extends AbstractController {
 
     /**
      *@Route("/blog/show", name= "blog_show")
+    * @\Sensio\Bundle\FrameworkExtraBundle\Configuration\Security("has_role('ROLE_USER')")
      */
     public function blogShow(){
+        //$this->denyAccessUnlessGranted('ROLE_ADMIN', null, "Buraya erisim hakkiniz bulunmamaktadir");
         $blogRepository = $this->getDoctrine()-> getRepository(blog::class);
         $blog= $blogRepository->findAll();
         return $this->render('Blog/index.html.twig', [
@@ -174,4 +178,57 @@ class BlogController extends AbstractController {
     private function randomNameForUploadedFile (){
         return md5(uniqid());
     }
+
+    /**
+     * @Route("/user-detay", name="user_detay")
+     */
+    public function userDetay()
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        /**@var User $user */
+        $user = $this-> getUser();
+        dump($user);
+
+
+        return new Response("Kullanıcı Detay Sayfası");
+
+    }
+
+    /**
+     * @Route("/user-detay-service", name="user_detay_service")
+     */
+    public function userDetayService(Security $security)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        /**@var User $user */
+        $user = $security-> getUser();
+        var_dump($user);
+
+
+        return new Response("Kullanıcı Detay Sayfası");
+
+    }
+    /**
+     * @Route("/user-detay-template", name="user_detay_template")
+     */
+    public function userDetayTemplate(Security $security)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        /**@var User $user */
+        $user = $security-> getUser();
+        var_dump($user);
+
+
+        return $this->render('security/user_detay.html.twig');
+
+    }
+
+    /**
+     * @Route("/role-hierarchy", name="role_hierarchy")
+     */
+    public function roleHierarchy(Security $security)
+    {
+        return $this->render('security/hierarchy.html.twig');
+    }
+
 }

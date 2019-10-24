@@ -1,4 +1,8 @@
 security:
+    role_hierarchy:
+        ROLE_EDITOR : ROLE_USER
+        ROLE_ADMIN : ROLE_EDITOR
+        ROLE_SUPER_ADMIN : ROLE_EDITOR
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     encoders:
         Symfony\Component\Security\Core\User\User:
@@ -8,18 +12,20 @@ security:
         in_memory:
             memory:
                 users:
-
-                    kadir:
-                        password: k@dir
-                        #şifrelenmemiş haliyle giriş yapmıyor
+                    user:
+                        password: '$2y$12$IPRzmXOEYdCF2OMMXdPVcOHA1fFm8sW/YSTftWXULXWVie3AJd2.i'
                         roles: 'ROLE_USER'
+                    kadir:
+                        password: '$2y$12$qc46LxjG8XPd2lIxpxDVAO4GF6sjnJAirQ4fa4.PiAA.WpqaYm7ha'
+                        #şifrelenmemiş haliyle giriş yapmıyor
+                        roles: 'ROLE_EDITOR'
                     admin:
                         password: '$2y$12$MsxN5pLD3i9SX9xl1bZOeeCk1ZbDfA/WHuObzI04RAeSNX/EaXAFO'
                         #admin123'ün sifrelenmis hali: $2y$12$MsxN5pLD3i9SX9xl1bZOeeCk1ZbDfA/WHuObzI04RAeSNX/EaXAFO
                         roles: 'ROLE_ADMIN'
-                    admin1:
-                        password: admin12
-                        roles: 'ROLE_ADMIN'
+                    superadmin:
+                        password: '$2y$12$rfRvHaa.fQk8wQr9aru8Se4HgoGdB7Yhtl8WVwTyWyrI3BZsmZj3C'
+                        roles: 'ROLE_SUPER_ADMIN'
                         #şifrelenmemiş haliyle giriş yapmıyor
     firewalls:
         dev:
@@ -30,7 +36,10 @@ security:
             form_login:
                 login_path: login
                 check_path: login
-                default_target_path: admin
+            logout:
+                path: /logout
+                target: /
+                #default_target_path: admin
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 

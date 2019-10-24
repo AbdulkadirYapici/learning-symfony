@@ -1,0 +1,16 @@
+{%  extends 'base.html.twig' %}
+
+{% block body %}
+    {%  if is_granted('ROLE_SUPER_ADMIN') %}
+        <b>
+            Süper admin yazısı <br>
+        </b>
+    {% endif %}
+    {%  if is_granted('ROLE_EDITOR') %}
+        <b>
+            Editor yazısı <br>
+        </b>
+        Giriş için: <a href="{{ path('login') }}">Giriş Yap</a>
+    {% endif %}
+{% endblock %}
+
