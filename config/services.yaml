@@ -38,3 +38,7 @@ services:
     App\Service\NameGenerator:
       arguments:
         $adminEmail: 'support@kadir.org'
+
+    App\EventListener\ResponseListener:
+      tags:
+        - { name: kernel.event_listener, event: kernel.response }
