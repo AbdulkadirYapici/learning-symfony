@@ -2,7 +2,7 @@
 
 namespace App\EventListener;
 
-
+//Service.yaml değiştiriliyor.
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 class ResponseListener
 {
@@ -11,6 +11,6 @@ class ResponseListener
         $response->headers->set('Name', 'kadir');
 
         $content = $response->getContent();
-        $response->setContent($content.' Merhaba Kadir');
+        $response->setContent($content.' Merhaba Kadir1');
     }
 }
